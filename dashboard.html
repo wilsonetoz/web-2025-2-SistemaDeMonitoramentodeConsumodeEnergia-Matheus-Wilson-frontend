@@ -42,7 +42,6 @@
 
     </section>
 
-    <!-- Formulário -->
     <section class="bg-white p-6 rounded-xl shadow mb-8">
       <h2 class="text-xl font-semibold mb-4 text-green-700">Adicionar Novo Consumo</h2>
       <form id="formConsumo" class="flex flex-wrap gap-3">
@@ -54,7 +53,6 @@
       </form>
     </section>
 
-    <!-- Tabela -->
     <section class="bg-white p-6 rounded-xl shadow">
       <h2 class="text-xl font-semibold mb-4 text-green-700">Histórico de Consumo</h2>
       <div class="overflow-x-auto">
@@ -65,12 +63,13 @@
               <th class="p-3">kWh</th>
               <th class="p-3">Custo (R$)</th>
               <th class="p-3">Observação</th>
+              <th class="bg- p-3">Ações</th>
             </tr>
           </thead>
           <tbody id="tabelaConsumo" class="divide-y divide-gray-200 bg-white"></tbody>
         </table>
       </div>
-      <div class="flex gap-3 mt-4">
+      <div class="bg- gap-3 mt-4">
         <button id="btnCSV" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Exportar CSV</button>
         <button id="btnPDF" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Exportar PDF</button>
       </div>
@@ -84,7 +83,7 @@
     </section>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script type="module" src="js/main.js"></script>
 </body>
 </html>

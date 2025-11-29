@@ -7,11 +7,11 @@ export function inicializarExportacoes() {
 
 function exportarCSV() {
   if (dadosGlobais.length === 0) return alert("Sem dados para exportar!");
-  const linhas = [["Data", "kWh", "Custo", "Observação"]];
+  const linhas = [["Data",  "kWh",  "Custo",  "Observação"]];
   dadosGlobais.forEach((d) =>
     linhas.push([d.data, d.kwh, d.custo, d.observacao || ""])
   );
-  const csv = linhas.map((l) => l.join(",")).join("\n");
+  const csv = linhas.map((l) => l.join(" - ")).join("\n");
   const blob = new Blob([csv], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -20,23 +20,27 @@ function exportarCSV() {
   a.click();
 }
 
-function exportarPDF() {
-  if (dadosGlobais.length === 0) return alert("Sem dados para exportar!");
+export async function exportarPDF() {
+  if (dadosGlobais.length === 0) {
+    alert("Sem dados para exportar!");
+    return;
+  }
 
-  import("https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js").then(
-    ({ jsPDF }) => {
-      const doc = new jsPDF();
-      doc.text("Relatório de Consumo - Energia+", 20, 20);
-      let y = 40;
-      dadosGlobais.forEach((d) => {
-        doc.text(
-          `${d.data} - ${d.kwh} kWh - R$ ${d.custo} - ${d.observacao || "-"}`,
-          20,
-          y
-        );
-        y += 10;
-      });
-      doc.save("relatorio_consumo.pdf");
-    }
-  );
+  const { jsPDF } = window.jspdf;
+
+  const doc = new jsPDF();
+  doc.setFontSize(14);
+  doc.text("Relatório de Consumo - Energia+", 20, 20);
+
+  let y = 40;
+  dadosGlobais.forEach((d) => {
+    doc.text(
+      `${d.data} - ${d.kwh} kWh - R$ ${d.custo.toFixed(2)} - ${d.observacao || "-"}`,
+      20,
+      y
+    );
+    y += 10;
+  });
+
+  doc.save("relatorio_consumo.pdf");
 }
